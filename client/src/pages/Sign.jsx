@@ -58,11 +58,32 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");  // Reset error before submitting
   
-    if (!formData.username || !formData.email || !formData.password) {
-      setError("All fields are required");
+    // if (!formData.username || !formData.email || !formData.password) {
+    //   setError("All fields are required");
+    //   return;
+    // }
+    const { username, email, password } = formData;
+
+    // 🔍 Validate Username
+    if (!username || username.trim().length < 3) {
+        setError("Username must be at least 3 characters long.");
+        return;
+      }
+      
+  
+    // 🔍 Validate Email
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email || !emailPattern.test(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
   
+    // 🔍 Validate Password
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (!password || !passwordPattern.test(password)) {
+      setError("Password must be at least 8 characters long and include letters, numbers, and special characters.");
+      return;
+    }
     try {
       setLoading(true);
       const response = await fetch("/api/auth", {
