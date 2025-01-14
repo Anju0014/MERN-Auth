@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 const Sign = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const Sign = () => {
   });
   const [error,setError]=useState('');
   const [loading,setLoading]=useState(false)
-
+  const navigate=useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -64,6 +64,11 @@ const handleSubmit = async (e) => {
     // }
     const { username, email, password } = formData;
 
+    if (!username ||!email||!password) {
+      setError("All fields are required");
+    return;
+  
+    }
     // 🔍 Validate Username
     if (!username || username.trim().length < 3) {
         setError("Username must be at least 3 characters long.");
@@ -101,7 +106,8 @@ const handleSubmit = async (e) => {
   
       const data = await response.json();
       setLoading(false);
-      setError("");  // Clear any previous errors
+      setError(""); 
+      useNavigate('/sign-in')
   
     } catch (error) {
       console.error("Error:", error.message);
