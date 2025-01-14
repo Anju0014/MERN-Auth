@@ -3,7 +3,7 @@ import Home from "./pages/Home"
 import Profile from "./pages/Profile"
 import About from "./pages/About"
 import Signin from "./pages/Signin"
-import SignUp from "./pages/SignUp"
+import Sign from "./pages/Sign"
 
 import Header from "./components/Header"
 
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/sign-in" element={<Signin />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-up" element={<Sign />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
