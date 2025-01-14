@@ -86,7 +86,7 @@ const handleSubmit = async (e) => {
     }
     try {
       setLoading(true);
-      const response = await fetch("/api/auth", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
