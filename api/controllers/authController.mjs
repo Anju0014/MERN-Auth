@@ -84,7 +84,7 @@ export const google=async (req,res,next)=>{
       // const {password: hashedPassword2,...rest}=newUser._doc;
       const { password: hashedPassword2, ...rest } = newUser._doc;
       const expiryDate= new Date(Date.now() +3600000);
-      res.cookie('access_token',token,{httpOnly:true,expires:expiryDate})
+      res.cookie('access_token',token,{httpOnly:true,expires:expiryDate}).status(200).json(rest)
     }
   }catch(error){
     next(error)
