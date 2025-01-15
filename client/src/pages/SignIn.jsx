@@ -73,7 +73,7 @@ const handleSubmit = async (e) => {
   return (
     <>
       <div className="p-3 max-w-lg mx-auto">
-        <h1 className="text-3xl text-center font-semibold my-7">SignUp</h1>
+        <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <p className='text-red-600  text-center mt-5'>{error? error ||'Something went wrong!': ''}</p>
         

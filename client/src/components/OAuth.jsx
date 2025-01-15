@@ -25,7 +25,12 @@ const OAuth = () => {
                 })
             })
             const data=await res.json();
-            console.log(data)
+            console.log("Backend data: ", data)
+            if (!res.ok) {
+                throw new Error(data.message || "Google authentication failed.");
+              }
+          
+
             dispatch(signInSuccess(data))
             console.log(result);
         }catch(error){
