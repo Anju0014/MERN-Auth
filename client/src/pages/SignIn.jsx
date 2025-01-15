@@ -1,37 +1,42 @@
 import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom';
+import { signInStart,signInFailure,signInSuccess } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Signin = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [error,setError]=useState('');
-  const [loading,setLoading]=useState(false)
+  const {loading,error}=useSelector((state)=>state.user)
+  // const [error,setError]=useState('');
+  // const [loading,setLoading]=useState(false)
   const navigate=useNavigate();
+  const dispatch=useDispatch();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-
 const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");  
+    dispatch(signInStart())
+     
     const { email, password } = formData;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email || !emailPattern.test(email)) {
-      setError("Please enter a valid email address.");
+      dispatch(signInFailure("Please enter a valid email address."));
       return;
     }
   
 
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     if (!password || !passwordPattern.test(password)) {
-      setError("Password must be at least 8 characters long and include letters, numbers, and special characters.");
+      dispatch(signInFailure("Password must be at least 8 characters long and include letters, numbers, and special characters."));
       return;
     }
     try {
-      setLoading(true);
+      
+    
       const response = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -46,14 +51,21 @@ const handleSubmit = async (e) => {
       }
   
       const data = await response.json();
-      setLoading(false);
-      setError("");  
+      
+      // setLoading(false);
+      // setError("");  
+      if(data.success===false){
+        dispatch(signInFailure())
+        return;
+      }
+      dispatch(signInSuccess(data))
       navigate('/')
   
     } catch (error) {
-      console.error("Error:", error.message);
-      setLoading(false);
-      setError(error.message);  
+      // console.error("Error:", error.message);
+      // setLoading(false);
+      // setError(error.message);  
+      dispatch(signInFailure(error))
     }
   };
   
@@ -62,7 +74,7 @@ const handleSubmit = async (e) => {
       <div className="p-3 max-w-lg mx-auto">
         <h1 className="text-3xl text-center font-semibold my-7">SignUp</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <p className='text-red-600  text-center mt-5'>{error}</p>
+          <p className='text-red-600  text-center mt-5'>{error? error ||'Something went wrong!': ''}</p>
         
           <input
             type="email"
@@ -95,6 +107,7 @@ const handleSubmit = async (e) => {
   //  <div>Signin</div>
   )
 }
+
 
 export default Signin
 
