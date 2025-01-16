@@ -1,5 +1,5 @@
 import { errorHandler } from "../utils/error.mjs"
-
+import User from "../models/userModel.mjs"
 export const check= (req,res)=>{
     res.json({
         message:'API IS WORKING'
@@ -26,7 +26,7 @@ export const updateUser= async (req,res,next)=>{
                 }
             },{new:true}
         )
-        const {password,...rest}=updatedUser._doc;
+        const {password,...rest}=updateUser._doc;
         res.status(200).json(rest);
 
 
