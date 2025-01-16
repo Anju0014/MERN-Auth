@@ -66,17 +66,18 @@ const handleSubmit = async (e) => {
       // console.error("Error:", error.message);
       // setLoading(false);
       // setError(error.message);  
-      dispatch(signInFailure(error))
+      dispatch(signInFailure(error.message||'Something went wrong'))
     }
   };
   
   return (
     <>
       <div className="p-3 max-w-lg mx-auto">
-        <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
+        <h1 className="text-3xl text-center text-red-600 font-semibold my-7">Sign In</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <p className='text-red-600  text-center mt-5'>{error? error ||'Something went wrong!': ''}</p>
-        
+          {/* <p className='text-red-600  text-center mt-5'>{error? error ||'Something went wrong!': ''}</p> */}
+          {error && <p className='text-red-600 text-center mt-5'>{String(error)}</p>}
+
           <input
             type="email"
             placeholder="Email"
@@ -106,7 +107,7 @@ const handleSubmit = async (e) => {
         </div>
       </div>
     </>
-  //  <div>Signin</div>
+  
   )
 }
 
