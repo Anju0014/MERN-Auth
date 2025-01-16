@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useRef,useState,useEffect } from 'react';
 import axios from 'axios'
-import { updateUserFailure,updateUserSuccess,updateUserStart, deleteUserStart,deleteUserFailure,deleteUserSuccess } from '../redux/user/userSlice';
+import { updateUserFailure,updateUserSuccess,updateUserStart, deleteUserStart,deleteUserFailure,deleteUserSuccess, signOut } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 
 
@@ -98,6 +98,15 @@ const handleDeleteAccount=async()=>{
   }
 }
 
+const handleSignout=async ()=>{
+  try{
+     await fetch('/api/auth/signout');
+     dispatch(signOut());
+  }catch(error){
+     console.log(error)
+  }
+}
+
 
   return (
     <div className="p-3 max-w-lg mx-auto ">
@@ -140,7 +149,7 @@ const handleDeleteAccount=async()=>{
       </form>
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteAccount} className='text-red-700 cursor-pointer'>Delete Account</span>
-        <span className='text-red-700 cursor-pointer'>Sign Out</span>
+        <span onClick={handleSignout} className='text-red-700 cursor-pointer'>Sign Out</span>
       </div>
       <p className='text-red-700 mt-5'>{error && 'Something went Wrong'}</p>
       <p className='text-green-700 mt-5'>{updateSuccess && 'User is Updated Successfully'}</p>
