@@ -49,7 +49,7 @@ import AdminLayout from "./layout/AdminLayout";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
-import SignIn from "./pages/Signin";
+import SignIn from "./pages/SignIn";
 import SignUp from "./pages/Sign";
 import NewUser from "./pages/NewUser";
 import PrivateRoute from "./components/PrivateRoute";
